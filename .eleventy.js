@@ -6,31 +6,42 @@ const fs = require('fs/promises');
 const postcss = require('postcss');
 const postcssNested = require('postcss-nested');
 
-module.exports = function (config) {
-    config.on('afterBuild', async () => {
-        esbuild.buildSync({
-            entryPoints: ['src/scripts/index.ts'],
-            bundle: true,
-            minify: process.env.ELEVENTY_ENV === "production",
-            sourcemap: process.env.ELEVENTY_ENV !== "production",
-            target: ['chrome58', 'firefox57', 'safari11', 'edge16'],
-            outfile: 'public/index.js',
-        })
+async function transformJs(entryFile, outputFile) {
+    await esbuild.build({
+        entryPoints: [entryFile],
+        bundle: true,
+        minify: process.env.ELEVENTY_ENV === "production",
+        sourcemap: process.env.ELEVENTY_ENV !== "production",
+        target: ['chrome58', 'firefox57', 'safari11', 'edge16'],
+        outfile: outputFile,
+    })
+}
 
-        const css = await fs.readFile('src/styles/main.css');
+async function transformCss(entryFile, outputFile) {
+    try {
+        const css = await fs.readFile(entryFile);
         const transformed = await postcss([atImport, autoprefixer, postcssNested, cssnano])
-            .process(css, { from: 'src/styles/main.css', to: 'public/index.css' })
+            .process(css, { from: entryFile, to: outputFile })
         if('css' in transformed && transformed.css) {
-            await fs.writeFile('public/index.css', transformed.css)
+            await fs.writeFile(outputFile, transformed.css)
         }
 
         if ('map' in transformed && transformed.map) {
-            await fs.writeFile('public/index.css.map', transformed.map.toString())
+            await fs.writeFile(`${outputFile}.map`, transformed.map.toString())
         }
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+module.exports = function (config) {
+    config.on('afterBuild', async () => {
+        await transformJs('src/scripts/main.ts', 'public/main.js')
+        await transformCss('src/styles/main.css', 'public/main.css');
     });
 
-    config.addWatchTarget('./src/scripts/');
-    config.addWatchTarget('./src/styles/');
+    config.addWatchTarget('src/scripts/');
+    config.addWatchTarget('src/styles/');
 
     return {
         dir: {
