@@ -4,33 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "run-p clean start:*",
-    "start:content": "npm run build:content -- --serve",
-    "start:styles": "npm run build:styles -- --watch",
-    "start:ts": "npm run build:ts -- --watch",
+    "start": "npm run build -- --serve",
     "clean": "del-cli public",
-    "build": "run-s clean build:*",
-    "build:content": "eleventy",
-    "build:styles": "postcss src/styles/main.css -o public/styles.css",
-    "build:ts": "rollup -c"
+    "build": "npm run clean && eleventy"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@11ty/eleventy": "^0.12.1",
-    "@rollup/plugin-commonjs": "^21.0.1",
-    "@rollup/plugin-node-resolve": "^13.1.1",
-    "@swc/core": "^1.2.120",
+    "@types/cssnano": "^4.0.1",
+    "@types/postcss-import": "^14.0.0",
     "autoprefixer": "^10.4.0",
-    "cssnano": "^5.0.12",
+    "browserslist": "^4.19.1",
+    "cssnano": "^5.0.13",
     "del-cli": "^4.0.1",
-    "npm-run-all": "^4.1.5",
+    "esbuild": "^0.14.5",
     "postcss": "^8.4.5",
     "postcss-cli": "^9.1.0",
-    "postcss-nested": "^5.0.6",
-    "rollup": "^2.61.1",
-    "rollup-plugin-swc": "^0.2.0"
+    "postcss-import": "^14.0.2",
+    "postcss-nested": "^5.0.6"
   },
   "dependencies": {
     "htm": "^3.1.0",
