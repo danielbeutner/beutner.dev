@@ -13,6 +13,7 @@
   "license": "MIT",
   "devDependencies": {
     "@11ty/eleventy": "^0.12.1",
+    "@swc/core": "^1.2.121",
     "@types/cssnano": "^4.0.1",
     "@types/postcss-import": "^14.0.0",
     "autoprefixer": "^10.4.0",
