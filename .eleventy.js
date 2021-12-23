@@ -31,6 +31,10 @@ module.exports = function (config) {
   // Asset Watch Targets
   config.addWatchTarget('./src/assets');
 
+  // Pass-through files
+  config.addPassthroughCopy('src/robots.txt');
+  config.addPassthroughCopy('src/site.webmanifest');
+
   // Markdown
   config.setLibrary(
     'md',
