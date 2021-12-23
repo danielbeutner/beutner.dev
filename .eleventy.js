@@ -1,73 +1,61 @@
-const atImport = require("postcss-import")
-const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
-const fs = require('fs/promises');
-const postcss = require('postcss');
-const postcssNested = require('postcss-nested');
-const swc = require('@swc/core')
-const { config } = require('@swc/core/spack');
-
-async function transformJs(outputPath) {
-    try {
-        const publicFolderExists = (await fs.stat(outputPath)).isDirectory()
-        const spackConfig = config({
-            mode: process.env.ELEVENTY_ENV === 'production' ? 'production' : 'none',
-            target: 'browser',
-            entry: {
-                main: __dirname + '/src/scripts/main.ts',
-            },
-            output: {
-                path: outputPath
-            },
-            module: {},
-        })
-        const bundle = await swc.bundle(spackConfig);
-
-        if (!publicFolderExists) {
-            await fs.mkdir(outputPath);
-        }
-
-        Object.keys(spackConfig.entry).forEach(async key => {
-            const fileName = `${key}.js`;
-            
-            await fs.writeFile(`${outputPath}/${fileName}`, bundle[key].code, 'utf-8');
-            await fs.writeFile(`${outputPath}/${fileName}.map`, bundle[key].map, 'utf-8');
-        })
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-async function transformCss(entryFile, outputFile) {
-    try {
-        const css = await fs.readFile(entryFile);
-        const transformed = await postcss([atImport, autoprefixer, postcssNested, cssnano])
-            .process(css, { from: entryFile, to: outputFile })
-        if ('css' in transformed && transformed.css) {
-            await fs.writeFile(outputFile, transformed.css, 'utf-8')
-        }
-
-        if ('map' in transformed && transformed.map) {
-            await fs.writeFile(`${outputFile}.map`, transformed.map.toString(), 'utf-8')
-        }
-    } catch (error) {
-        console.error(error)
-    }
-}
+const pluginRss = require('@11ty/eleventy-plugin-rss');
+const filters = require('./utils/filters.js');
+const transforms = require('./utils/transforms.js');
+const shortcodes = require('./utils/shortcodes.js');
+const markdownIt = require('markdown-it');
 
 module.exports = function (config) {
-    config.on('afterBuild', async () => {
-        await transformJs(__dirname + '/public')
-        await transformCss(__dirname + '/src/styles/main.css', __dirname + '/public/main.css');
-    });
+  // Plugins
+  config.addPlugin(pluginRss);
+  config.addNunjucksFilter('dateToRfc3339', pluginRss.dateToRfc3339);
 
-    config.addWatchTarget('src/scripts/');
-    config.addWatchTarget('src/styles/');
+  // Layout aliases
+  config.addLayoutAlias('base', 'base.njk');
+  config.addLayoutAlias('post', 'post.njk');
 
-    return {
-        dir: {
-            input: 'src',
-            output: 'public'
-        }
-    };
+  // Filters
+  Object.keys(filters).forEach((filterName) => {
+    config.addFilter(filterName, filters[filterName]);
+  });
+
+  // Transforms
+  Object.keys(transforms).forEach((transformName) => {
+    config.addTransform(transformName, transforms[transformName]);
+  });
+
+  // Shortcodes
+  Object.keys(shortcodes).forEach((shortcodeName) => {
+    config.addShortcode(shortcodeName, shortcodes[shortcodeName]);
+  });
+
+  // Asset Watch Targets
+  config.addWatchTarget('./src/assets');
+
+  // Markdown
+  config.setLibrary(
+    'md',
+    markdownIt({
+      html: true,
+      breaks: true,
+      linkify: true,
+      typographer: true,
+    })
+  );
+
+  // Deep merge
+  config.setDataDeepMerge(true);
+
+  // Base Config
+  return {
+    dir: {
+      input: 'src',
+      output: 'public',
+      includes: 'includes',
+      layouts: 'layouts',
+      data: 'data',
+    },
+    templateFormats: ['njk', 'md', '11ty.js'],
+    htmlTemplateEngine: 'njk',
+    markdownTemplateEngine: 'njk',
+  };
 };
