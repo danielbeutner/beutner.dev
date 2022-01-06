@@ -1,8 +1,8 @@
 ---
 title: Another FizzBuzz version
-date: '2019-07-21T12:00:00.000Z'
 description: "Another FizzBuzz version and you won't like it …"
 cover: ./fizzbuzz.jpg
+slug: another-fizzbuzz
 ---
 
 This is my version of the infamous FizzBuzz interview test.
