@@ -61,6 +61,13 @@ module.exports = function (config) {
   // Liquid options (default from 1.x)
   config.setLiquidOptions({ dynamicPartials: true, strictFilters: true });
 
+  // Collections: Posts
+  config.addCollection('posts', function (collection) {
+    return collection
+      .getFilteredByGlob('src/posts/**/*.md')
+      .filter((item) => item.data.permalink !== false)
+      .filter((item) => !(item.data.draft && IS_PRODUCTION));
+  });
 
   // Base Config
   return {
