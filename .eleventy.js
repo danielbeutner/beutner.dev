@@ -3,8 +3,12 @@ const filters = require('./utils/filters.js');
 const transforms = require('./utils/transforms.js');
 const shortcodes = require('./utils/shortcodes.js');
 const markdownIt = require('markdown-it');
+const UpgradeHelper = require('@11ty/eleventy-upgrade-help');
 
 module.exports = function (config) {
+  // Helper for upgrading to 1.x
+  config.addPlugin(UpgradeHelper);
+
   // Plugins
   config.addPlugin(pluginRss);
   config.addNunjucksFilter('dateToRfc3339', pluginRss.dateToRfc3339);
