@@ -9,7 +9,7 @@
     "build": "run-s clean eleventy:prod",
     "clean": "del-cli public",
     "format": "npx prettier . --write",
-    "eleventy:dev": "cross-env ELEVENTY_ENV=development DEBUG=btnr:* eleventy --serve",
+    "eleventy:dev": "cross-env ELEVENTY_ENV=development eleventy --serve",
     "eleventy:prod": "cross-env ELEVENTY_ENV=production eleventy"
   },
   "keywords": [],
