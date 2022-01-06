@@ -56,8 +56,11 @@ module.exports = function (config) {
     })
   );
 
-  // Deep merge
+  // Deep merge (default is "true" in 1.x)
   config.setDataDeepMerge(true);
+  // Liquid options (default from 1.x)
+  config.setLiquidOptions({ dynamicPartials: true, strictFilters: true });
+
 
   // Base Config
   return {
