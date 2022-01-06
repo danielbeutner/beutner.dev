@@ -1,0 +1,13 @@
+---
+layout: base
+permalink: /blog/
+eleventyNavigation:
+  key: Blog
+---
+
+{%- for post in collections.posts | reverse -%}
+  <a href="{{ post.url }}">
+    <h2>{{ post.data.title }}</h2>
+    <time itemprop="datePublished" datetime="{{ page.date | dateToISO }}">{{ page.date | readableDate('dd LLL yyyy') }}</time>
+  </a>
+{%- endfor -%}
