@@ -1,12 +1,22 @@
 const pluginRss = require('@11ty/eleventy-plugin-rss');
+const pluginNavigation = require('@11ty/eleventy-navigation');
+const pluginSyntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 const filters = require('./utils/filters.js');
 const transforms = require('./utils/transforms.js');
 const shortcodes = require('./utils/shortcodes.js');
 const markdownIt = require('markdown-it');
+const UpgradeHelper = require('@11ty/eleventy-upgrade-help');
 
 module.exports = function (config) {
+  // Helper for upgrading to 1.x
+  config.addPlugin(UpgradeHelper);
+
   // Plugins
   config.addPlugin(pluginRss);
+  config.addPlugin(pluginNavigation);
+  config.addPlugin(pluginSyntaxHighlight);
+
+  // Template Filter
   config.addNunjucksFilter('dateToRfc3339', pluginRss.dateToRfc3339);
 
   // Layout aliases
@@ -46,8 +56,18 @@ module.exports = function (config) {
     })
   );
 
-  // Deep merge
+  // Deep merge (default is "true" in 1.x)
   config.setDataDeepMerge(true);
+  // Liquid options (default from 1.x)
+  config.setLiquidOptions({ dynamicPartials: true, strictFilters: true });
+
+  // Collections: Posts
+  config.addCollection('posts', function (collection) {
+    return collection
+      .getFilteredByGlob('src/posts/**/*.md')
+      .filter((item) => item.data.permalink !== false)
+      .filter((item) => !(item.data.draft && IS_PRODUCTION));
+  });
 
   // Base Config
   return {

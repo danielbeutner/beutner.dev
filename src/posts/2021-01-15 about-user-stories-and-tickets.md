@@ -1,8 +1,8 @@
 ---
 title: About stories and tickets
-date: '2021-01-15T12:00:00.000Z'
 description: 'Tickets always have a User Story …'
 cover: ./aboutuserstories.jpg
+slug: about-user-stories-and-tickets
 ---
 
 Many years ago I struggled with tickets and how to use them. How do I structure the tickets and how do I write them correctly so that everyone agrees with them and most importantly, to answer the question "when is it done?".
