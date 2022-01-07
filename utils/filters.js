@@ -1,4 +1,5 @@
 const { DateTime } = require('luxon');
+const slugify = require('slugify');
 
 module.exports = {
   readableDate: function (date, format) {
@@ -29,5 +30,16 @@ module.exports = {
       chars.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
     }
     return chars.join('');
+  },
+  // See: https://github.com/11ty/eleventy/issues/278#issuecomment-451105828
+  slug: function (input) {
+    const options = {
+      replacement: '-',
+      remove: /[&,+()$~%.'":*?<>{}]/g,
+      lower: true,
+      trim: true,
+    };
+
+    return slugify(input, options);
   },
 };
