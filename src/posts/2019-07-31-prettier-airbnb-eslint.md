@@ -2,7 +2,6 @@
 title: Using Prettier with Airbnb's ESLint config
 description: 'Two strong rule sets to rule your code'
 cover: ./eslint-prettier-airbnb.jpg
-slug: prettier-airbnb-eslint
 ---
 
 ## What is Prettier and Airbnb’s ESlint configuration

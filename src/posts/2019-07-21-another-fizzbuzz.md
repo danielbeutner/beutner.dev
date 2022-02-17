@@ -2,7 +2,6 @@
 title: Another FizzBuzz version
 description: "Another FizzBuzz version and you won't like it …"
 cover: ./fizzbuzz.jpg
-slug: another-fizzbuzz
 ---
 
 This is my version of the infamous FizzBuzz interview test.
