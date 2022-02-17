@@ -1,4 +1,4 @@
-import 'unfetch';
+import 'unfetch/polyfill';
 
 const BASE_URL = self.location.origin;
 

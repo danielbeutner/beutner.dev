@@ -11,7 +11,7 @@ class Scripts {
       entryPoints: [ENTRY_POINT],
       bundle: true,
       minify: isProd,
-      sourcemap: isProd,
+      sourcemap: !isProd ? 'inline' : false,
       target: ['chrome58', 'firefox57', 'safari11', 'edge16'],
       outfile: OUTPUT_FILE_PATH,
       write: false,
@@ -37,11 +37,13 @@ class Scripts {
 
       // We only use the first entry point as the script only
       // supports one file at a time
-      const code = result.outputFiles[0].text;
+      const { text } = result.outputFiles.find(
+        ({ path }) => path === OUTPUT_FILE_PATH
+      );
+      console.log(text);
+      console.log('built %s (%s kB)', OUTPUT_FILE_PATH, getSize(text));
 
-      console.log('built %s (%s kB)', OUTPUT_FILE_PATH, getSize(code));
-
-      return code.toString();
+      return text.toString();
     } catch (error) {
       console.error(error);
       return null;

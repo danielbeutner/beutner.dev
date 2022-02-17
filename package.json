@@ -40,7 +40,6 @@
     "slugify": "^1.6.5"
   },
   "dependencies": {
-    "preact-render-to-string": "^5.1.19",
     "unfetch": "^4.2.0"
   }
 }
