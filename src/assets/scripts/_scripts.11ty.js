@@ -40,7 +40,7 @@ class Scripts {
       const { text } = result.outputFiles.find(
         ({ path }) => path === OUTPUT_FILE_PATH
       );
-      console.log(text);
+
       console.log('built %s (%s kB)', OUTPUT_FILE_PATH, getSize(text));
 
       return text.toString();

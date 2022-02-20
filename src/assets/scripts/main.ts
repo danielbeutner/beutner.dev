@@ -69,8 +69,6 @@ async function handleClick(event: Event) {
 }
 
 async function handlePopState(event) {
-  console.log(event.target);
-
   const targetUrl = new URL(event.target.location.href);
 
   try {
