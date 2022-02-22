@@ -1,0 +1,4 @@
+{
+  "layout": "snippet",
+  "permalink": "snippets/{{ page.fileSlug }}/index.html"
+}
