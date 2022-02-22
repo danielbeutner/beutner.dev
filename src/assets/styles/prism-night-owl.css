@@ -1,7 +1,7 @@
 code[class*='language-'],
 pre[class*='language-'] {
   color: #d6deeb;
-  font-family: 'dm', monospace;
+  font-family: 'cascadia', monospace;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
