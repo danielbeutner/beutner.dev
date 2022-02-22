@@ -142,3 +142,10 @@ time {
 #main > ol > li > p {
   width: 75%;
 }
+
+img.profile {
+  border-radius: 100%;
+  max-width: 8rem;
+  margin: 1.66rem;
+}
+

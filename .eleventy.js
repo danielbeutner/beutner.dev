@@ -7,6 +7,7 @@ const shortcodes = require('./utils/shortcodes.js');
 const markdownIt = require('markdown-it');
 const UpgradeHelper = require('@11ty/eleventy-upgrade-help');
 const pageAssetsPlugin = require('eleventy-plugin-page-assets');
+const isProd = process.env.ELEVENTY_ENV === 'production';
 
 module.exports = function (config) {
   // Helper for upgrading to 1.x
@@ -27,6 +28,7 @@ module.exports = function (config) {
   // Layout aliases
   config.addLayoutAlias('base', 'base.njk');
   config.addLayoutAlias('post', 'post.njk');
+  config.addLayoutAlias('snippet', 'snippet.njk');
 
   // Filters
   Object.keys(filters).forEach((filterName) => {
@@ -46,6 +48,7 @@ module.exports = function (config) {
   // Asset Watch Targets and copy
   config.addWatchTarget('./src/assets');
   config.addPassthroughCopy('src/assets/fonts/*');
+  config.addPassthroughCopy('src/assets/images/*');
 
   // Pass-through files
   config.addPassthroughCopy('src/site.webmanifest');
@@ -71,7 +74,12 @@ module.exports = function (config) {
     return collection
       .getFilteredByGlob('src/posts/**/*.md')
       .filter((item) => item.data.permalink !== false)
-      .filter((item) => !(item.data.draft && IS_PRODUCTION));
+      .filter((item) => !(item.data.draft && isProd));
+  });
+
+  // Collections: Snippets
+  config.addCollection('snippets', function (collection) {
+    return collection.getFilteredByGlob('src/snippets/*.md');
   });
 
   // Base Config
