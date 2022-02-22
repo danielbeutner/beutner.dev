@@ -43,11 +43,11 @@ module.exports = function (config) {
     config.addShortcode(shortcodeName, shortcodes[shortcodeName]);
   });
 
-  // Asset Watch Targets
+  // Asset Watch Targets and copy
   config.addWatchTarget('./src/assets');
+  config.addPassthroughCopy('src/assets/fonts/*');
 
   // Pass-through files
-  config.addPassthroughCopy('src/robots.txt');
   config.addPassthroughCopy('src/site.webmanifest');
 
   // Markdown
@@ -69,7 +69,7 @@ module.exports = function (config) {
   // Collections: Posts
   config.addCollection('posts', function (collection) {
     return collection
-      .getFilteredByGlob('src/posts/*.md')
+      .getFilteredByGlob('src/posts/**/*.md')
       .filter((item) => item.data.permalink !== false)
       .filter((item) => !(item.data.draft && IS_PRODUCTION));
   });

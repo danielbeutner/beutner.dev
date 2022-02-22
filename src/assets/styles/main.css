@@ -4,13 +4,14 @@
 @import 'helper.css';
 
 html {
-  font: 100%/1.666 'dm', monospace;
+  font: 100%/1.66 'arbutus', serif;
   box-sizing: border-box;
   overflow-y: scroll;
 }
 
 :root {
-  --main-link-background: #000;
+  --main-link-background: #222;
+  --main-typo-color: #222;
   --main-secondary-color: #666;
   --main-inactive-color: #ddd;
 }
@@ -27,19 +28,31 @@ html {
   }
 }
 
-h1 a,
-h3 a {
-  padding: 0.2em;
-  line-height: 1em;
+h1,
+h2,
+h3,
+h4 {
+  margin-bottom: 1rem;
+  font-weight: normal;
+  font-family: 'chunkfive', sans-serif;
+  color: var(--main-typo-color);
+}
+
+p {
+  color: var(--main-typo-color);
+}
+
+strong {
+  color: #000;
 }
 
 a:link,
 a:visited {
-  background-color: var(--main-link-background);
   color: #fff;
+  background-color: var(--main-link-background);
   text-decoration: none;
   display: inline-block;
-  padding: 0 0.2em;
+  padding: 0 0.66em;
 }
 
 a:hover,
@@ -61,27 +74,20 @@ small {
   font-style: italic;
 }
 
-footer {
-  color: var(--main-secondary-color);
-  font-size: 0.85em;
+p,
+ul,
+time {
+  margin-bottom: 1rem;
 }
 
-footer ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+li {
+  margin-bottom: 1rem;
 }
 
-footer ul li {
-  display: inline;
-}
-
-footer ul li::after {
-  content: ' | ';
-}
-
-footer ul li:last-child::after {
-  content: '';
+time {
+  font-style: italic;
+  display: block;
+  white-space: nowrap;
 }
 
 [role='navigation'] ul {
@@ -91,5 +97,48 @@ footer ul li:last-child::after {
 }
 
 [role='navigation'] ul li {
-  padding: 0.66rem;
+  padding: 0.5rem;
+}
+
+#title {
+  font-size: 3rem;
+}
+
+[role='document'] {
+  max-width: 50rem;
+  margin: 0 5rem;
+}
+
+#main > ol {
+  padding: 0;
+}
+
+#main > ol > li {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin-bottom: 1.66rem;
+  position: relative;
+}
+
+#main > ol > li > h2 > a::after {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#main > ol > li > h2 {
+  width: 75%;
+}
+
+#main > ol li #main > time {
+  width: 25%;
+  padding: 0 0.66rem;
+}
+
+#main > ol > li > p {
+  width: 75%;
 }

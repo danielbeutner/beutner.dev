@@ -4,10 +4,15 @@ permalink: /blog/
 eleventyNavigation:
   key: Blog
 ---
-
-{%- for post in collections.posts | reverse -%}
-  <a href="{{ post.url }}">
-    <h2>{{ post.data.title }}</h2>
-    <time itemprop="datePublished" datetime="{{ post.date | dateToISO }}">{{ post.date | readableDate('dd LLL yyyy') }}</time>
-  </a>
-{%- endfor -%}
+<h1>Blog</h1>
+<ol>
+  {%- for post in collections.posts | reverse -%}
+    <li>
+      <h2>
+        <a href="{{ post.url }}">{{ post.data.title }}</a>
+      </h2>
+      <time itemprop="datePublished" datetime="{{ post.date | dateToISO }}">{{ post.date | readableDate('dd LLL yyyy') }}</time>
+      <p>{{ post.data.description }}</p>
+    </li>
+  {%- endfor -%}
+</ol>
