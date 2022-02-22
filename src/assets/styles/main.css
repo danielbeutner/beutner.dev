@@ -100,6 +100,10 @@ time {
   padding: 0.5rem;
 }
 
+[role='navigation'] ul li a {
+  padding: 0.5rem 1rem;
+}
+
 #title {
   font-size: 3rem;
 }
@@ -119,6 +123,10 @@ time {
   justify-content: space-between;
   margin-bottom: 1.66rem;
   position: relative;
+}
+
+#main > ol > li > h2 > a {
+  padding: 0.5rem 1rem;
 }
 
 #main > ol > li > h2 > a::after {
@@ -149,3 +157,6 @@ img.profile {
   margin: 1.66rem;
 }
 
+footer {
+  padding: 2rem 0;
+}
