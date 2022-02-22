@@ -1,4 +1,5 @@
 const debug = require('debug');
+
 const NAMESPACE = 'btnr';
 
 function getSize(string) {

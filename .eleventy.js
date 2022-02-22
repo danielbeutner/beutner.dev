@@ -6,6 +6,7 @@ const transforms = require('./utils/transforms.js');
 const shortcodes = require('./utils/shortcodes.js');
 const markdownIt = require('markdown-it');
 const UpgradeHelper = require('@11ty/eleventy-upgrade-help');
+const pageAssetsPlugin = require('eleventy-plugin-page-assets');
 
 module.exports = function (config) {
   // Helper for upgrading to 1.x
@@ -15,6 +16,10 @@ module.exports = function (config) {
   config.addPlugin(pluginRss);
   config.addPlugin(pluginNavigation);
   config.addPlugin(pluginSyntaxHighlight);
+  config.addPlugin(pageAssetsPlugin, {
+    mode: 'parse',
+    postsMatching: 'src/posts/**/*.md',
+  });
 
   // Template Filter
   config.addNunjucksFilter('dateToRfc3339', pluginRss.dateToRfc3339);
