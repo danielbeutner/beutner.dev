@@ -18,19 +18,19 @@ async function getPage(url: string) {
       return response.text();
     }
   } catch (error) {
-    throw undefined;
+    throw error;
   }
 }
 
 async function renderPage(targetUrl: URL) {
-  const docSelector = '[role="document"]';
-  const mimeType = 'text/html';
   const response = await getPage(targetUrl.pathname);
+
   const dom = new DOMParser();
+
   const nextPage = dom
-    .parseFromString(response, mimeType)
-    .querySelector(docSelector);
-  const currentPage = document.querySelector(docSelector);
+    .parseFromString(response, 'text/html')
+    .querySelector('[role="document"]');
+  const currentPage = document.querySelector('[role="document"]');
 
   document.body.replaceChild(nextPage, currentPage);
 }
@@ -57,9 +57,9 @@ async function handleClick(event: Event) {
     event.preventDefault();
 
     try {
-      await renderPage(targetUrl);
-
       self.history.pushState({}, undefined, targetUrl);
+
+      await renderPage(targetUrl);
     } catch (error) {
       if ('message' in error) throw new Error(`Reason: ${error.message}`);
     }
