@@ -1,0 +1,17 @@
+---
+layout: base
+permalink: /snippets/
+eleventyNavigation:
+  key: Snippets
+---
+<h1>Snippets</h1>
+<ol>
+  {%- for snippet in collections.snippets | reverse -%}
+    <li>
+      <h2>
+        <a href="{{ snippet.url }}">{{ snippet.data.title }}</a>
+      </h2>
+      <time itemprop="datePublished" datetime="{{ snippet.date | dateToISO }}">{{ snippet.date | readableDate('dd LLL yyyy') }}</time>
+    </li>
+  {%- endfor -%}
+</ol>
