@@ -1,13 +1,12 @@
 ---
 layout: base
 ---
-<article 
-    id="{{ title | slug }}" 
-    class="post h-entry" 
-    role="article" 
-    itemscope 
-    itemtype="http://schema.org/BlogPosting" 
-    aria-labelledby="{{ title | slug }}-title" 
+<article
+    id="{{ title | slug }}"
+    role="article"
+    itemscope
+    itemtype="http://schema.org/BlogPosting"
+    aria-labelledby="{{ title | slug }}-title"
 >
     <header>
         <h1 id="{{ title | slug }}-title" itemprop="headline">{{ title }}</h1>
