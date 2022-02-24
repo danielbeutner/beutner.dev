@@ -1,0 +1,29 @@
+/* post and snippet lists */
+.post-list,
+.snippet-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.post-list-item,
+.snippet-list-item {
+  /* Used for ::after as this is positioned 'absolute' */
+  position: relative;
+}
+
+.post-list-item a,
+.snippet-list-item a {
+  padding: 0.5rem 1rem;
+}
+
+/* link the whole list element and not only the link itself */
+.post-list-item a::after,
+.snippet-list-item a::after {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

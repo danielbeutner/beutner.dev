@@ -5,9 +5,9 @@ eleventyNavigation:
   key: Snippets
 ---
 <h1>Snippets</h1>
-<ol>
+<ol class="snippet-list">
   {%- for snippet in collections.snippets | reverse -%}
-    <li>
+    <li class="snippet-list-item">
       <h2>
         <a href="{{ snippet.url }}">{{ snippet.data.title }}</a>
       </h2>
