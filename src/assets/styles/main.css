@@ -1,21 +1,20 @@
 @import 'reset.css';
 @import 'fonts.css';
-@import 'prism-night-owl.css';
+@import 'layout.css';
+@import 'header.css';
+@import 'footer.css';
 @import 'helper.css';
+@import 'lists.css';
+@import 'prism-night-owl.css';
 
-html {
-  font: 100%/1.66 'arbutus', serif;
-  box-sizing: border-box;
-  overflow-y: scroll;
-}
-
+/* Variables */
 :root {
   --main-link-background: #222;
   --main-typo-color: #222;
   --main-secondary-color: #666;
-  --main-inactive-color: #ddd;
 }
 
+/* Animations */
 @keyframes k1 {
   0% {
     background-position: 0% 50%;
@@ -28,17 +27,84 @@ html {
   }
 }
 
+/* Typography */
+html {
+  font-family: 'arbutus', serif;
+}
+
+body {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+h1 {
+  font-size: 2.25rem;
+  line-height: 1.16666666666;
+  margin-bottom: 1.875rem;
+}
+
+h2 {
+  font-size: 1.875rem;
+  line-height: 1.2;
+  padding-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  padding-top: 0.75rem;
+  margin-bottom: 0.375rem;
+}
+
+h4 {
+  font-size: 1.3125rem;
+  line-height: 1.3333333;
+  padding-top: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+h5 {
+  font-size: 1.125rem;
+  line-height: 1.5;
+  padding-top: 0.75rem;
+  margin-bottom: 0.5625rem;
+}
+
+h6 {
+  font-size: 1rem;
+  line-height: 1.5;
+  padding-top: 0.5625rem;
+  margin-bottom: 0.1875rem;
+}
+
+ul {
+  padding: 0 0 0 1rem;
+}
+
+p,
+li {
+  margin-bottom: 0.75rem;
+}
+
 h1,
 h2,
 h3,
-h4 {
-  margin-bottom: 1rem;
-  font-weight: normal;
-  font-family: 'chunkfive', sans-serif;
-  color: var(--main-typo-color);
+h4,
+h5,
+h6,
+p {
+  margin-top: 0;
 }
 
-p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  font-family: 'chunkfive', sans-serif;
   color: var(--main-typo-color);
 }
 
@@ -74,89 +140,9 @@ small {
   font-style: italic;
 }
 
-p,
-ul,
 time {
-  margin-bottom: 1rem;
-}
-
-li {
-  margin-bottom: 1rem;
-}
-
-time {
-  font-style: italic;
+  color: var(--main-secondary-color);
   display: block;
+  font-style: italic;
   white-space: nowrap;
-}
-
-[role='navigation'] ul {
-  display: flex;
-  list-style: none;
-  padding: 0;
-}
-
-[role='navigation'] ul li {
-  padding: 0.5rem;
-}
-
-[role='navigation'] ul li a {
-  padding: 0.5rem 1rem;
-}
-
-#title {
-  font-size: 3rem;
-}
-
-[role='document'] {
-  max-width: 50rem;
-  margin: 0 5rem;
-}
-
-#main > ol {
-  padding: 0;
-}
-
-#main > ol > li {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  margin-bottom: 1.66rem;
-  position: relative;
-}
-
-#main > ol > li > h2 > a {
-  padding: 0.5rem 1rem;
-}
-
-#main > ol > li > h2 > a::after {
-  content: ' ';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-#main > ol > li > h2 {
-  width: 75%;
-}
-
-#main > ol li #main > time {
-  width: 25%;
-  padding: 0 0.66rem;
-}
-
-#main > ol > li > p {
-  width: 75%;
-}
-
-img.profile {
-  border-radius: 100%;
-  max-width: 8rem;
-  margin: 1.66rem;
-}
-
-footer {
-  padding: 2rem 0;
 }
