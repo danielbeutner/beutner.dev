@@ -5,7 +5,7 @@
 @import 'footer.css';
 @import 'helper.css';
 @import 'lists.css';
-@import 'prism-night-owl.css';
+@import 'night-owl.css';
 
 /* Variables */
 :root {
@@ -103,22 +103,28 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: normal;
+  font-weight: 400;
   font-family: 'chunkfive', sans-serif;
   color: var(--main-typo-color);
+  letter-spacing: 0.025ch;
 }
 
 strong {
   color: #000;
 }
 
-a:link,
-a:visited {
+a {
   color: #fff;
   background-color: var(--main-link-background);
   text-decoration: none;
   display: inline-block;
-  padding: 0 0.66em;
+  padding: 0 0.25rem;
+}
+
+a[href^='http']::after {
+  content: ' (external link)';
+  color: #ccc;
+  font-size: 0.75em;
 }
 
 a:hover,

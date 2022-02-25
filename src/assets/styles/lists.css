@@ -14,7 +14,7 @@
 
 .post-list-item a,
 .snippet-list-item a {
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.375rem;
 }
 
 /* link the whole list element and not only the link itself */

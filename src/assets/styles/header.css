@@ -17,11 +17,12 @@ img.profile {
 
 [role='navigation'] ul {
   --gap: 0.75rem;
-  padding: 0;
-  list-style: none;
+  align-items: baseline;
   display: inline-flex;
   flex-wrap: wrap;
+  list-style: none;
   margin: calc(-1 * var(--gap)) 0 0 calc(-1 * var(--gap));
+  padding: 0;
   width: calc(100% + var(--gap));
 }
 
@@ -30,5 +31,17 @@ img.profile {
 }
 
 [role='navigation'] ul li a {
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.5rem;
+}
+
+[role='navigation'] ul li a::after {
+  content: ' ‹';
+}
+
+[role='navigation'] ul li a::before {
+  content: '› ';
+}
+
+[aria-current='page'] {
+  background-color: #aa00ff;
 }

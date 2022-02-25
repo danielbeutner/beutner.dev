@@ -1,5 +1,6 @@
 code[class*='language-'],
 pre[class*='language-'] {
+  border-radius: 0.3em;
   color: #d6deeb;
   font-family: 'cascadia', monospace;
   text-align: left;
@@ -50,7 +51,6 @@ pre {
 
 :not(pre) > code,
 pre {
-  color: white;
   background: #011627;
 }
 
@@ -58,6 +58,8 @@ pre {
   padding: 0.1em;
   border-radius: 0.3em;
   white-space: normal;
+  color: rgb(199, 146, 234);
+  padding: 0.125rem 0.25rem;
 }
 
 .token.comment,
