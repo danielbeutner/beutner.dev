@@ -122,9 +122,9 @@ a {
 }
 
 a[href^='http']::after {
-  content: ' (external link)';
-  color: #ccc;
-  font-size: 0.75em;
+  display: inline-block;
+  content: ' »';
+  transform: rotate(-45deg) translate(0.5ch, -0.5ch);
 }
 
 a:hover,
