@@ -5,8 +5,9 @@ const filters = require('./utils/filters.js');
 const transforms = require('./utils/transforms.js');
 const shortcodes = require('./utils/shortcodes.js');
 const markdownIt = require('markdown-it');
+const markdownItImages = require('./utils/markdown-it-images.js');
 const UpgradeHelper = require('@11ty/eleventy-upgrade-help');
-const pageAssetsPlugin = require('eleventy-plugin-page-assets');
+
 const isProd = process.env.ELEVENTY_ENV === 'production';
 
 module.exports = function (config) {
@@ -17,10 +18,6 @@ module.exports = function (config) {
   config.addPlugin(pluginRss);
   config.addPlugin(pluginNavigation);
   config.addPlugin(pluginSyntaxHighlight);
-  config.addPlugin(pageAssetsPlugin, {
-    mode: 'parse',
-    postsMatching: 'src/posts/**/*.md',
-  });
 
   // Template Filter
   config.addNunjucksFilter('dateToRfc3339', pluginRss.dateToRfc3339);
@@ -61,7 +58,7 @@ module.exports = function (config) {
       breaks: true,
       linkify: true,
       typographer: true,
-    })
+    }).use(markdownItImages)
   );
 
   // Deep merge (default is "true" in 1.x)

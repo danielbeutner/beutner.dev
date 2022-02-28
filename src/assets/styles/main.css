@@ -152,3 +152,8 @@ time {
   font-style: italic;
   white-space: nowrap;
 }
+
+img,
+picture {
+  height: auto;
+}
