@@ -1,3 +1,4 @@
+const path = require('node:path');
 const Image = require('@11ty/eleventy-img');
 
 module.exports = {
@@ -8,26 +9,35 @@ module.exports = {
     className,
     formats = ['jpeg', 'webp'],
     widths = [null, 320, 768],
-    urlPath = '',
-    outputDir
+    urlPath = '/assets/images/',
+    outputDir = path.join('public', 'assets', 'images')
   ) {
     const options = {
       widths,
       formats,
-      outputDir,
-      urlPath,
     };
+
+    if (urlPath !== undefined) {
+      options.urlPath = urlPath;
+    }
+
+    if (outputDir !== undefined) {
+      options.outputDir = outputDir;
+    }
 
     // Generate images but we don't wait for it
     Image(src, options);
 
     const imageAttributes = {
       alt,
-      class: className,
       decoding: 'async',
       loading: 'lazy',
       sizes,
     };
+
+    if (className !== undefined) {
+      imageAttributes.class = className;
+    }
 
     let imageMetadata = Image.statsSync(src, options);
 
