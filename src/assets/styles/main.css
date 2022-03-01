@@ -157,3 +157,9 @@ img,
 picture {
   height: auto;
 }
+
+code,
+pre {
+  font-family: 'cascadiacode', monospace;
+  font-weight: 100;
+}
