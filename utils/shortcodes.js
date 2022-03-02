@@ -12,6 +12,10 @@ module.exports = {
     urlPath = '/assets/images/',
     outputDir = path.join('public', 'assets', 'images')
   ) {
+    if (alt === undefined) {
+      throw new Error(`You need to set an "alt" attribute for ${src}`);
+    }
+
     const options = {
       widths,
       formats,
