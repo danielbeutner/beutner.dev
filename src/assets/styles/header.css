@@ -1,6 +1,14 @@
 /* title */
 #title {
   font-size: 2rem;
+  padding: 0 0.5ch;
+}
+#title::after {
+  content: '«';
+}
+
+#title::before {
+  content: '»';
 }
 
 /* profile image */
@@ -16,7 +24,7 @@ img.profile {
 }
 
 [role='navigation'] ul {
-  --gap: 0.75rem;
+  --gap: 1ch;
   align-items: baseline;
   display: inline-flex;
   flex-wrap: wrap;
@@ -31,15 +39,15 @@ img.profile {
 }
 
 [role='navigation'] ul li a {
-  padding: 0.25rem 0.5rem;
+  padding: 0.5ch 1ch;
 }
 
 [role='navigation'] ul li a::after {
-  content: ' ‹';
+  content: '‹';
 }
 
 [role='navigation'] ul li a::before {
-  content: '› ';
+  content: '›';
 }
 
 [aria-current='page'] {
