@@ -1,4 +1,4 @@
 {
   "layout": "snippet",
-  "permalink": "snippets/{{ page.fileSlug }}/index.html"
+  "permalink": "snippets/{{ title | slugify }}/index.html"
 }
