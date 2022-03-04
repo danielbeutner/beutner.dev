@@ -11,9 +11,6 @@ const UpgradeHelper = require('@11ty/eleventy-upgrade-help');
 const isProd = process.env.ELEVENTY_ENV === 'production';
 
 module.exports = function (config) {
-  // Helper for upgrading to 1.x
-  config.addPlugin(UpgradeHelper);
-
   // Plugins
   config.addPlugin(pluginRss);
   config.addPlugin(pluginNavigation);
