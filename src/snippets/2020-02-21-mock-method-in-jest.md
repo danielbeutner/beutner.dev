@@ -2,7 +2,7 @@
 title: Mock only a certain method in Jest
 ---
 
-You can mock olny the used methods of a dependency with `jest.mock`:
+You can mock only the used methods of a dependency with `jest.mock` and `jest.requireActual`:
 
 ```javascript
 import { method } from 'some-module';
