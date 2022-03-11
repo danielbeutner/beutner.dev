@@ -1,7 +1,5 @@
 code[class*='language-'],
 pre[class*='language-'] {
-  border-radius: 0.3em;
-  color: #d6deeb;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
@@ -50,15 +48,17 @@ pre {
 
 :not(pre) > code,
 pre {
-  background: #011627;
+  border-radius: 0.3em;
+  color: rgb(214, 222, 235);
+  background: rgb(1, 22, 39);
 }
 
 :not(pre) > code {
-  padding: 0.1em;
-  border-radius: 0.3em;
+  padding: 0.5ch;
   white-space: normal;
-  color: rgb(199, 146, 234);
-  padding: 0.125rem 0.25rem;
+  color: rgb(1, 22, 39);
+  background: rgb(214, 222, 235);
+  font-size: 0.9rem;
 }
 
 .token.comment,
