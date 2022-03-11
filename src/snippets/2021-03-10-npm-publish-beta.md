@@ -2,7 +2,7 @@
 title: Publish a beta to npm
 ---
 
-If you need a beta package to test your package, there is a manual way to do it.
+If you need to test your package or occasionally need a _beta_ or _next_ version.
 
 First you can bump the version to the next major version for example with:
 
@@ -17,3 +17,5 @@ After that you can publish your package with the flag `--tag beta`, which will u
 ```
 npm publish --tag beta
 ```
+
+The tag can be pretty much everything and will not affect the stable versions. This means, you need to install this tagged version explicity with `npm install my-package@1.0.0-beta.0` or `npm install my-package@beta`. The latter will install the latest version in your `beta` "branch".
