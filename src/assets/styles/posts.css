@@ -1,0 +1,4 @@
+article > header > time {
+  display: block;
+  margin-bottom: 1.875rem;
+}
