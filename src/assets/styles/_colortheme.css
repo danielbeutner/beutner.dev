@@ -23,4 +23,21 @@
     --main-highlight-color--secondary: #aa00ff;
     --main-highlight-color--tertiary: #663dff;
   }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    opacity: 0.75;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  img:hover,
+  picture:hover,
+  video:hover,
+  canvas:hover,
+  svg:hover {
+    opacity: 1;
+  }
 }
