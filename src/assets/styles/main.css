@@ -1,19 +1,13 @@
-@import 'reset.css';
-@import 'fonts.css';
-@import 'layout.css';
-@import 'header.css';
-@import 'footer.css';
-@import 'helper.css';
-@import 'lists.css';
-@import 'posts.css';
-@import 'night-owl.css';
-
-/* Variables */
-:root {
-  --main-link-background: #222;
-  --main-typo-color: #222;
-  --main-secondary-color: #666;
-}
+@import '_reset.css';
+@import '_fonts.css';
+@import '_layout.css';
+@import '_header.css';
+@import '_footer.css';
+@import '_helper.css';
+@import '_lists.css';
+@import '_posts.css';
+@import '_nightowl.css';
+@import '_colortheme.css';
 
 /* Animations */
 @keyframes k1 {
@@ -34,6 +28,7 @@ html {
 }
 
 body {
+  background-color: var(--main-background-color);
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -85,6 +80,7 @@ ul {
 
 p,
 li {
+  color: var(--main-typo-color);
   margin-bottom: 0.75rem;
 }
 
@@ -111,11 +107,11 @@ h6 {
 }
 
 strong {
-  color: #000;
+  color: var(--main-typo-color--strong);
 }
 
 a {
-  color: #fff;
+  color: var(--main-link-color);
   background-color: var(--main-link-background);
   text-decoration: none;
   display: inline-block;
@@ -133,12 +129,12 @@ a:focus,
 a:active {
   animation: k1 5s ease infinite;
   background-size: 400% 400%;
-  background-color: #663dff;
+  background-color: var(--main-highlight-color);
   background-image: linear-gradient(
     319deg,
-    #663dff 0%,
-    #aa00ff 37%,
-    #cc4499 100%
+    var(--main-highlight-color) 0%,
+    var(--main-highlight-color--secondary) 37%,
+    var(--main-highlight-color--tertiary) 100%
   );
 }
 

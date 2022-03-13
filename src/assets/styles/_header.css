@@ -1,14 +1,7 @@
 /* title */
 #title {
   font-size: 2rem;
-  padding: 0 0.5ch;
-}
-#title::after {
-  content: '«';
-}
-
-#title::before {
-  content: '»';
+  color: var(--main-typo-color);
 }
 
 /* profile image */
@@ -42,14 +35,6 @@ img.profile {
   padding: 0.5ch 1ch;
 }
 
-[role='navigation'] ul li a::after {
-  content: '‹';
-}
-
-[role='navigation'] ul li a::before {
-  content: '›';
-}
-
 [aria-current='page'] {
-  background-color: #aa00ff;
+  background-color: var(--main-highlight-color);
 }

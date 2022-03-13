@@ -1,0 +1,26 @@
+/* Variables */
+:root {
+  --main-background-color: #fff;
+  --main-link-background: #222;
+  --main-link-color: #fff;
+  --main-typo-color: #222;
+  --main-typo-color--strong: #000;
+  --main-secondary-color: #666;
+  --main-highlight-color: #663dff;
+  --main-highlight-color--secondary: #aa00ff;
+  --main-highlight-color--tertiary: #cc4499;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-background-color: #222;
+    --main-link-background: #ddd;
+    --main-link-color: #222;
+    --main-typo-color: #ddd;
+    --main-typo-color--strong: #fff;
+    --main-secondary-color: #ddd;
+    --main-highlight-color: #cc4499;
+    --main-highlight-color--secondary: #aa00ff;
+    --main-highlight-color--tertiary: #663dff;
+  }
+}
