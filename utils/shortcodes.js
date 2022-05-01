@@ -7,7 +7,7 @@ module.exports = {
     alt,
     sizes = '100vw',
     className,
-    formats = ['jpeg', 'webp'],
+    formats = ['jpeg', 'webp', 'avif'],
     widths = [null, 320, 768],
     urlPath = '/assets/images/',
     outputDir = path.join('public', 'assets', 'images')
