@@ -33,6 +33,8 @@ async function renderPage(targetUrl: URL) {
   const currentPage = document.querySelector('[role="document"]');
 
   document.body.replaceChild(nextPage, currentPage);
+
+  self.scrollTo(0, 0);
 }
 
 async function handleClick(event: Event) {
