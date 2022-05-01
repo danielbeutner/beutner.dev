@@ -5,10 +5,15 @@
 }
 
 /* profile image */
-img.profile {
+.profile-image {
   border-radius: 100%;
   max-width: 8rem;
   margin: 1.66rem;
+  transition: border-radius 0.5s linear;
+}
+
+.profile-image:hover {
+  border-radius: 15%;
 }
 
 /* main navigation */
