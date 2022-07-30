@@ -22,18 +22,38 @@ async function getPage(url: string) {
   }
 }
 
-async function renderPage(targetUrl: URL) {
-  const response = await getPage(targetUrl.pathname);
-
+function updateDocument(htmlString: string) {
   const dom = new DOMParser();
-
   const nextPage = dom
-    .parseFromString(response, 'text/html')
+    .parseFromString(htmlString, 'text/html')
     .querySelector('[role="document"]');
   const currentPage = document.querySelector('[role="document"]');
 
-  document.body.replaceChild(nextPage, currentPage);
+  if (!nextPage || !currentPage) return;
 
+  document.body.replaceChild(nextPage, currentPage);
+}
+
+function updateHead(htmlString: string) {
+  const dom = new DOMParser();
+  const nextHead = dom.parseFromString(htmlString, 'text/html').head;
+  const currentHead = document.head;
+
+  if (!nextHead || !currentHead) return;
+
+  currentHead.replaceWith(nextHead);
+}
+
+async function renderPage(targetUrl: URL) {
+  const response = await getPage(targetUrl.pathname);
+
+  if (!response) return;
+
+  // Render the document and the head section
+  updateDocument(response);
+  updateHead(response);
+
+  // Scroll up on page update
   self.scrollTo(0, 0);
 }
 
@@ -42,13 +62,15 @@ async function handleClick(event: Event) {
   let anchorHref: string;
   const element = event.target;
 
-  if (element instanceof HTMLElement) {
-    try {
-      anchorHref = element.closest('a').href;
-      targetUrl = new URL(anchorHref);
-    } catch (error) {
-      return false;
-    }
+  // If it is not an anchor we do nothing at all
+  if (!(element instanceof HTMLAnchorElement)) return;
+  if (!element.closest('a')) return;
+
+  try {
+    anchorHref = element.href;
+    targetUrl = new URL(anchorHref);
+  } catch (error) {
+    return false;
   }
 
   if (!targetUrl || targetUrl.hash !== '') {
@@ -59,7 +81,7 @@ async function handleClick(event: Event) {
     event.preventDefault();
 
     try {
-      self.history.pushState({}, undefined, targetUrl);
+      self.history.pushState({}, '', targetUrl);
 
       await renderPage(targetUrl);
     } catch (error) {
@@ -70,7 +92,13 @@ async function handleClick(event: Event) {
   return true;
 }
 
-async function handlePopState(event) {
+function isLocation(input): input is Location {
+  return 'location' in input;
+}
+
+async function handlePopState(event: PopStateEvent) {
+  if (event?.target === null || !(event.target instanceof Window)) return;
+
   const targetUrl = new URL(event.target.location.href);
 
   try {
