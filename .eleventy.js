@@ -6,7 +6,6 @@ const transforms = require('./utils/transforms.js');
 const shortcodes = require('./utils/shortcodes.js');
 const markdownIt = require('markdown-it');
 const markdownItImages = require('./utils/markdown-it-images.js');
-const UpgradeHelper = require('@11ty/eleventy-upgrade-help');
 
 const isProd = process.env.ELEVENTY_ENV === 'production';
 
