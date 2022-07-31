@@ -22,36 +22,28 @@ async function getPage(url: string) {
   }
 }
 
-function updateDocument(htmlString: string) {
+function updateNodes(htmlString: string, selectors: string[]) {
   const dom = new DOMParser();
-  const nextPage = dom
-    .parseFromString(htmlString, 'text/html')
-    .querySelector('[role="document"]');
-  const currentPage = document.querySelector('[role="document"]');
 
-  if (!nextPage || !currentPage) return;
+  selectors.forEach((selector) => {
+    const nextNode = dom
+      .parseFromString(htmlString, 'text/html')
+      .querySelector(selector);
+    const node = document.querySelector(selector);
 
-  document.body.replaceChild(nextPage, currentPage);
-}
+    if (!nextNode || !node) return;
 
-function updateHead(htmlString: string) {
-  const dom = new DOMParser();
-  const nextHead = dom.parseFromString(htmlString, 'text/html').head;
-  const currentHead = document.head;
-
-  if (!nextHead || !currentHead) return;
-
-  currentHead.replaceWith(nextHead);
+    node.replaceWith(nextNode);
+  });
 }
 
 async function renderPage(targetUrl: URL) {
-  const response = await getPage(targetUrl.pathname);
+  const page = await getPage(targetUrl.pathname);
 
-  if (!response) return;
+  if (!page) return;
 
-  // Render the document and the head section
-  updateDocument(response);
-  updateHead(response);
+  // Update the head, nav and main section
+  updateNodes(page, ['head', 'nav', 'main']);
 
   // Scroll up on page update
   self.scrollTo(0, 0);
