@@ -8,12 +8,15 @@ const isProd = process.env.ELEVENTY_ENV === 'production';
 class Scripts {
   data() {
     const config = {
-      entryPoints: [ENTRY_POINT],
       bundle: true,
+      define: {
+        PRODUCTION: isProd ? 'true' : 'false',
+      },
+      entryPoints: [ENTRY_POINT],
       minify: isProd,
+      outfile: OUTPUT_FILE_PATH,
       sourcemap: !isProd ? 'inline' : false,
       target: ['chrome58', 'firefox57', 'safari11', 'edge16'],
-      outfile: OUTPUT_FILE_PATH,
       write: false,
     };
 
