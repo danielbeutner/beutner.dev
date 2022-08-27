@@ -77,3 +77,23 @@ Then convert this to an Union type with `typeof State` to convert the object to 
 // Result: type Status = 'success' | 'error' | 'pending';
 type Status = typeof State[keyof typeof State];
 ```
+
+And by the way: You can also fixate the values with `Object.freeze`. TypeScript wraps the object with the Generic `Readonly` which is the the same as prefixing the entries with `readonly`.
+
+```typescript
+/* 
+  typeof State = const States: Readonly<{
+    SUCCESS: "success";
+    ERROR: "error";
+    PENDING: "pending";
+  }>
+*/
+const State = Object.freeze({
+  SUCCESS: 'success',
+  ERROR: 'error',
+  PENDING: 'pending',
+});
+
+// Result: type Status = 'success' | 'error' | 'pending';
+type Status = typeof State[keyof typeof State];
+```
