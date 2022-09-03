@@ -160,3 +160,7 @@ pre {
   font-family: 'cascadiacode', monospace;
   font-weight: 100;
 }
+
+pre[class*='language-'] {
+  margin: 3ch 0;
+}
