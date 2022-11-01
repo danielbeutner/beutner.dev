@@ -1,8 +1,15 @@
 @font-face {
-  font-family: 'cascadiacode';
-  src: url('/assets/fonts/cascadiacode.woff2') format('woff2');
+  font-family: 'dankmono';
+  src: url('/assets/fonts/dankmono.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
+}
+
+@font-face {
+  font-family: 'dankmono';
+  src: url('/assets/fonts/dankmonoitalic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
 }
 
 @font-face {

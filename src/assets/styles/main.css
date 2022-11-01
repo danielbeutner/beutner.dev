@@ -157,8 +157,8 @@ picture {
 
 code,
 pre {
-  font-family: 'cascadiacode', monospace;
-  font-weight: 100;
+  font-family: 'dankmono', monospace;
+  font-weight: normal;
 }
 
 pre[class*='language-'] {
