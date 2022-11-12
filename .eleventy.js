@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const pluginRss = require('@11ty/eleventy-plugin-rss');
 const pluginNavigation = require('@11ty/eleventy-navigation');
 const pluginSyntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
