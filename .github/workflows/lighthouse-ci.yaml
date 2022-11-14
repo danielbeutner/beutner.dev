@@ -4,17 +4,24 @@ jobs:
   lhci:
     name: Lighthouse CI
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16]
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.4
         with:
-          node-version: 16.x
-      - name: npm install
+          version: 7
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: pnpm install
         run: |
-          npm install
-          npm run build
+          pnpm install
+          pnpm build
       - name: run Lighthouse CI
         run: |
-          npm install -g @lhci/cli@0.9.x
+          pnpm add -g @lhci/cli@0.9.x
           lhci autorun || echo "LHCI failed!"

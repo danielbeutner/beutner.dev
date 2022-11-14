@@ -2,6 +2,10 @@
   "name": "beutner.dev",
   "version": "1.0.0",
   "description": "Personal blog of Daniel Beutner",
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=7"
+  },
   "scripts": {
     "start": "npm run dev",
     "dev": "run-s clean eleventy:dev",
@@ -20,7 +24,6 @@
     "@11ty/eleventy-navigation": "^0.3.2",
     "@11ty/eleventy-plugin-rss": "^1.1.2",
     "@11ty/eleventy-plugin-syntaxhighlight": "^4.0.0",
-    "@types/cssnano": "^5.0.0",
     "@types/postcss-import": "^14.0.0",
     "autoprefixer": "^10.4.0",
     "browserslist": "^4.19.1",
