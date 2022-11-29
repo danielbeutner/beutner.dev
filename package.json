@@ -7,11 +7,11 @@
     "pnpm": ">=7"
   },
   "scripts": {
-    "start": "npm run dev",
+    "start": "pnpm dev",
     "dev": "run-s clean eleventy:dev",
     "build": "run-s clean eleventy:prod",
     "clean": "del-cli public",
-    "format": "npx prettier . --write",
+    "format": "pnpm dlx prettier . --write",
     "eleventy:dev": "cross-env ELEVENTY_ENV=development eleventy --serve",
     "eleventy:prod": "cross-env ELEVENTY_ENV=production eleventy"
   },
