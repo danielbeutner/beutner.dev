@@ -1,5 +1,8 @@
 .DS_Store
 node_modules/
-public/
+dist/
+.astro/
 .env
+.env.*
 .lighthouseci
+.wrangler/

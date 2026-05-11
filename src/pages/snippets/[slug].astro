@@ -1,0 +1,19 @@
+---
+import { getCollection, render } from 'astro:content';
+import Snippet from '../../layouts/Snippet.astro';
+
+export async function getStaticPaths() {
+  const snippets = await getCollection('snippets');
+  return snippets.map((snippet) => ({
+    params: { slug: snippet.id },
+    props: { snippet },
+  }));
+}
+
+const { snippet } = Astro.props;
+const { Content } = await render(snippet);
+---
+
+<Snippet title={snippet.data.title} pubDate={snippet.data.pubDate} entryId={snippet.id}>
+  <Content />
+</Snippet>
