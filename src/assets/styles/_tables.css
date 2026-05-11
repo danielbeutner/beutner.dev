@@ -1,0 +1,28 @@
+/* Tables (markdown) */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-block: 1.5rem;
+  font-size: 0.9375rem;
+}
+
+thead {
+  border-bottom: 2px solid var(--main-highlight-color);
+}
+
+th {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-weight: bold;
+  color: var(--main-typo-color--strong);
+}
+
+td {
+  padding: 0.5rem 0.75rem;
+  color: var(--main-typo-color);
+  border-bottom: 1px solid var(--main-secondary-color);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
