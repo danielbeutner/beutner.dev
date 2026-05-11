@@ -1,0 +1,38 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { SITE } from '../config';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Meta from '../components/Meta.astro';
+import '../assets/styles/main.css';
+
+interface Props {
+  title?: string | undefined;
+  description?: string | undefined;
+  image?: string | undefined;
+}
+
+const { title, description, image } = Astro.props;
+const pageTitle = title ? `${title} - ${SITE.title}` : SITE.title;
+---
+
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <Meta title={title} description={description} image={image} />
+    <ClientRouter />
+  </head>
+  <body>
+    <a href="#main" class="visually-hidden">skip to main content</a>
+    <div role="document">
+      <Header />
+      <main id="main" tabindex="-1">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>

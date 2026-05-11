@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { formatDate, isoDate } from '../../config';
+
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<Base title="Blog">
+  <h1>Blog</h1>
+  <ol class="post-list">
+    {
+      posts.map((post) => (
+        <li class="post-list-item">
+          <h2>
+            <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+          </h2>
+          <time itemprop="datePublished" datetime={isoDate(post.data.pubDate)}>
+            {formatDate(post.data.pubDate)}
+          </time>
+          {post.data.description && <p>{post.data.description}</p>}
+        </li>
+      ))
+    }
+  </ol>
+</Base>

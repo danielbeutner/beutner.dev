@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { formatDate, isoDate } from '../../config';
+
+const snippets = (await getCollection('snippets')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<Base title="Snippets">
+  <h1>Snippets</h1>
+  <ol class="snippet-list">
+    {
+      snippets.map((snippet) => (
+        <li class="snippet-list-item">
+          <h2>
+            <a href={`/snippets/${snippet.id}/`}>{snippet.data.title}</a>
+          </h2>
+          <time itemprop="datePublished" datetime={isoDate(snippet.data.pubDate)}>
+            {formatDate(snippet.data.pubDate)}
+          </time>
+        </li>
+      ))
+    }
+  </ol>
+</Base>

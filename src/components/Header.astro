@@ -1,0 +1,10 @@
+---
+import Nav from './Nav';
+
+const currentPath = Astro.url.pathname;
+---
+
+<header role="banner">
+  <span id="title">beutner.dev</span>
+  <Nav currentPath={currentPath} client:load />
+</header>

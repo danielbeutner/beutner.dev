@@ -1,0 +1,32 @@
+---
+import Base from './Base.astro';
+import { formatDate, isoDate } from '../config';
+
+interface Props {
+  title: string;
+  pubDate: Date;
+  entryId: string;
+}
+
+const { title, pubDate, entryId } = Astro.props;
+---
+
+<Base title={title}>
+  <article
+    id={entryId}
+    role="article"
+    itemscope
+    itemtype="http://schema.org/BlogPosting"
+    aria-labelledby={`${entryId}-title`}
+  >
+    <header>
+      <h1 id={`${entryId}-title`} itemprop="headline">{title}</h1>
+      <time itemprop="datePublished" datetime={isoDate(pubDate)}>
+        {formatDate(pubDate)}
+      </time>
+    </header>
+    <div itemprop="articleBody">
+      <slot />
+    </div>
+  </article>
+</Base>
