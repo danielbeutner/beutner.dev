@@ -9,10 +9,7 @@ export default defineConfig({
   site: SITE_URL,
   output: 'static',
   adapter: cloudflare({ sessionKVBindingName: undefined }),
-  integrations: [
-    preact({ compat: true }),
-    sitemap(),
-  ],
+  integrations: [preact({ compat: true }), sitemap()],
   markdown: {
     shikiConfig: {
       theme: 'night-owl',

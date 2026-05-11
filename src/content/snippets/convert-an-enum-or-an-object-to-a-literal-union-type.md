@@ -76,5 +76,5 @@ Then you can convert the values to an union of string literal types with `typeof
 */
 
 // Result: type Status = 'success' | 'error' | 'pending';
-type Status = typeof State[keyof typeof State];
+type Status = (typeof State)[keyof typeof State];
 ```

@@ -16,7 +16,8 @@ export default function Nav({ currentPath }: Props) {
   useEffect(() => {
     const handlePageLoad = () => setPathname(window.location.pathname);
     document.addEventListener('astro:page-load', handlePageLoad);
-    return () => document.removeEventListener('astro:page-load', handlePageLoad);
+    return () =>
+      document.removeEventListener('astro:page-load', handlePageLoad);
   }, []);
 
   return (
@@ -27,10 +28,7 @@ export default function Nav({ currentPath }: Props) {
             href === '/' ? pathname === '/' : pathname.startsWith(href);
           return (
             <li key={href}>
-              <a
-                href={href}
-                aria-current={isCurrent ? 'page' : undefined}
-              >
+              <a href={href} aria-current={isCurrent ? 'page' : undefined}>
                 {label}
               </a>
             </li>

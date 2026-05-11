@@ -10,27 +10,27 @@ pubDate: 2026-05-11
 
 The first time you use Zustand, you'll spend a few minutes staring at the code wondering what the catch is. There is no Provider wrapping your tree. No dispatch. No action creators, no selectors, no 400-line boilerplate that you copy-paste from a template and half-understand.
 
-Create a store: 
+Create a store:
 
 ```ts
 // store/index.ts
 const useStore = create<State>((set) => ({
   bears: 0,
-  increasePopulation: () => set(state => ({ bears: state.bears + 1 })),
-}))
+  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
+}));
 ```
 
 Add it to your component:
 
 ```ts
-const bears = useStore(state => state.bears)
+const bears = useStore((state) => state.bears);
 ```
 
 That's it. That's the whole thing. No `connect()`, no HOCs, no 17 files to open just to follow a data update. You use a hook. It re-renders when the selected slice changes. It doesn't re-render when other parts of the store change. **It just works.**
 
 Then, about three weeks into a real production application, things get interesting.
 
-You have server-rendered pages like in Next.js that need to pre-populate state. You have persistence requirements, but only for *some* things. Your store has grown from "a few properties" to "a sprawling continent with its own political history" and the Zustand docs, excellent as they are, politely wave goodbye at the door.
+You have server-rendered pages like in Next.js that need to pre-populate state. You have persistence requirements, but only for _some_ things. Your store has grown from "a few properties" to "a sprawling continent with its own political history" and the Zustand docs, excellent as they are, politely wave goodbye at the door.
 
 This is everything on the other side of that door.
 
@@ -71,28 +71,27 @@ The fix is a tiny custom utility: `createSliceHelpers`. It takes the root `set` 
 ```ts
 // `InitialState<T>` uses `StateOnly` to build a type for server-provided initial state — partial, because the server might only hydrate some slices:
 export type InitialState<T> = {
-  [K in keyof T]?: Partial<StateOnly<T[K]>>
-}
+  [K in keyof T]?: Partial<StateOnly<T[K]>>;
+};
 //`SliceSet<S[K]>` and `SliceGet<S[K]>` are the types for the scoped `set` and `get` that each slice factory receives. Because `createSliceHelpers` scopes them, typescript can enforce that a cart slice only mutates cart state:
-export type SliceSet<T> = (updater: (state: T) => void) => void
-export type SliceGet<T> = () => T
-
+export type SliceSet<T> = (updater: (state: T) => void) => void;
+export type SliceGet<T> = () => T;
 
 export function createSliceHelpers<S extends object>(
   rootSet: SliceSet<S>,
   rootGet: SliceGet<S>,
-  initState?: InitialState<S>
+  initState?: InitialState<S>,
 ) {
   return <K extends keyof S>(
     key: K,
-    creator: (set: SliceSet<S[K]>, get: SliceGet<S[K]>) => S[K]
+    creator: (set: SliceSet<S[K]>, get: SliceGet<S[K]>) => S[K],
   ): S[K] => {
-    const scopedSet: SliceSet<S[K]> = fn =>
-      rootSet(root => fn(root[key] as S[K]))
-    const scopedGet: SliceGet<S[K]> = () => rootGet()[key]
+    const scopedSet: SliceSet<S[K]> = (fn) =>
+      rootSet((root) => fn(root[key] as S[K]));
+    const scopedGet: SliceGet<S[K]> = () => rootGet()[key];
 
-    return { ...creator(scopedSet, scopedGet), ...initState?.[key] }
-  }
+    return { ...creator(scopedSet, scopedGet), ...initState?.[key] };
+  };
 }
 ```
 
@@ -105,17 +104,17 @@ export function createStore(initState?: InitState) {
   return createZustandStore<Store>()(
     persist(
       immer((set, get) => {
-        const slice = createSliceHelpers<Store>(set, get, initState)
+        const slice = createSliceHelpers<Store>(set, get, initState);
 
         return {
           cart: slice('cart', createCartSlice),
           notifications: slice('notifications', createNotificationsSlice),
           overlay: slice('overlay', createOverlaySlice),
-        }
+        };
       }),
-      persistOptions
-    )
-  )
+      persistOptions,
+    ),
+  );
 }
 ```
 
@@ -139,23 +138,20 @@ The payoff of Immer is dramatic for nested state. Consider adding an item to a c
 
 ```ts
 // ❌ without immer
-set(state => ({
+set((state) => ({
   ...state,
   cart: {
     ...state.cart,
-    items: [
-      ...state.cart.items,
-      newItem
-    ]
-  }
-}))
+    items: [...state.cart.items, newItem],
+  },
+}));
 ```
 
 ```ts
 // ✅ with immer
-set(state => {
-  state.items.push(newItem)
-})
+set((state) => {
+  state.items.push(newItem);
+});
 ```
 
 One of these is legible to a new team member. One looks like a particularly anxious JavaScript interview answer. Immer costs you nothing and gives you the second form everywhere.
@@ -168,7 +164,7 @@ When `persist` restores state from localStorage on page load, it calls a merge f
 
 ```ts
 // What persist does internally by default:
-Object.assign(currentStore, persistedSnapshot)
+Object.assign(currentStore, persistedSnapshot);
 ```
 
 Your current store's `cart` slice looks like this:
@@ -196,35 +192,32 @@ cart: {
 
 The reason this is hard to catch in tests is that most test setups never exercise the rehydration path. The store initializes fresh for every test, so the functions are always there. You only see the bug when a real user loads the page with data already in their localStorage.
 
-The fix is a custom merge that deep-merges each slice individually, with a preference for functions from the *current* (freshly initialized) store:
+The fix is a custom merge that deep-merges each slice individually, with a preference for functions from the _current_ (freshly initialized) store:
 
 ```ts
 // utils/zustand.ts
 export function createSliceMerge<S extends object>() {
-  return (
-    persisted: unknown,
-    current: S
-  ): S => {
-    const p = (persisted ?? {}) as Partial<S>
-    const result = { ...current }
+  return (persisted: unknown, current: S): S => {
+    const p = (persisted ?? {}) as Partial<S>;
+    const result = { ...current };
 
     for (const key in current) {
-      if (!(key in p)) continue
-      const sliceCurrent = current[key]
-      const slicePersisted = p[key]
+      if (!(key in p)) continue;
+      const sliceCurrent = current[key];
+      const slicePersisted = p[key];
 
       // Deep merge: data from persisted, functions from current
       result[key] = Object.fromEntries(
         Object.entries(sliceCurrent).map(([k, v]) => [
           k,
           typeof v === 'function'
-            ? v                           // always keep current fn
-            : (slicePersisted?.[k] ?? v)  // prefer persisted data
-        ])
-      )
+            ? v // always keep current fn
+            : (slicePersisted?.[k] ?? v), // prefer persisted data
+        ]),
+      );
     }
-    return result
-  }
+    return result;
+  };
 }
 ```
 
@@ -241,19 +234,19 @@ The solution is to never use a module-level store singleton at all. Instead, cre
 ```tsx
 // root-store-provider.tsx
 export function RootStoreProvider({ children, initState }: Props) {
-  const [store] = useState<StoreApi>(() => createStore(initialState))
+  const [store] = useState<StoreApi>(() => createStore(initialState));
 
   return (
     <RootStoreContext.Provider value={store}>
       {children}
     </RootStoreContext.Provider>
-  )
+  );
 }
 
 export const useRootStore = <T,>(selector: (state: Store) => T): T => {
-  const store = useContext(RootStoreContext)
-  return useStore(store, selector)
-}
+  const store = useContext(RootStoreContext);
+  return useStore(store, selector);
+};
 ```
 
 The `initState` prop is the SSR bridge. Your server (what ever this may be at your side) fetches what it needs, passes it to the provider, and `createStore(initState)` spreads it into the right slices before the first render. The client gets pre-populated state with no flicker and no hydration mismatch.
@@ -278,23 +271,30 @@ The classic fix is a closure-based request counter. It lives in the slice closur
 
 ```ts
 export function createSearchSlice(set, _get) {
-  let currentRequestId = 0  // lives in the closure, not in state
+  let currentRequestId = 0; // lives in the closure, not in state
 
   return {
-    query: '', results: [], isLoading: false,
+    query: '',
+    results: [],
+    isLoading: false,
 
     async fetchResults(query) {
-      const requestId = ++currentRequestId  // capture THIS call's id
+      const requestId = ++currentRequestId; // capture THIS call's id
 
-      set(state => { state.isLoading = true })
+      set((state) => {
+        state.isLoading = true;
+      });
 
-      const data = await fetch(`/api/search?q=${query}`).then(r => r.json())
+      const data = await fetch(`/api/search?q=${query}`).then((r) => r.json());
 
-      if (requestId !== currentRequestId) return  // stale — discard
+      if (requestId !== currentRequestId) return; // stale — discard
 
-      set(state => { state.results = data.results; state.isLoading = false })
-    }
-  }
+      set((state) => {
+        state.results = data.results;
+        state.isLoading = false;
+      });
+    },
+  };
 }
 ```
 
@@ -309,22 +309,22 @@ The store itself needs no React to test. `createStore()` returns a plain store A
 ```ts
 // root-store/index.unit.ts
 test('adds an item to the cart', () => {
-  const store = createStore()
-  const item = { id: '1', name: 'Widget', price: 9.99 }
+  const store = createStore();
+  const item = { id: '1', name: 'Widget', price: 9.99 };
 
-  store.getState().cart.addItem(item)
+  store.getState().cart.addItem(item);
 
-  expect(store.getState().cart.items).toEqual([item])
-})
+  expect(store.getState().cart.items).toEqual([item]);
+});
 
 test('does not persist overlay state', () => {
-  const store = createStore()
-  const { partialize } = store.persist.getOptions()
+  const store = createStore();
+  const { partialize } = store.persist.getOptions();
 
-  const persisted = partialize!(store.getState())
+  const persisted = partialize!(store.getState());
 
-  expect(persisted).not.toHaveProperty('overlay')
-})
+  expect(persisted).not.toHaveProperty('overlay');
+});
 ```
 
 The merge utility is pure and needs no store context at all. You can test it with plain objects:
@@ -332,17 +332,19 @@ The merge utility is pure and needs no store context at all. You can test it wit
 ```ts
 // utils/zustand.unit.ts
 test('preserves action functions during merge', () => {
-  const merge = createSliceMerge<{ cart: { items: unknown[]; addItem: () => void } }>()
-  const addItem = jest.fn()
+  const merge = createSliceMerge<{
+    cart: { items: unknown[]; addItem: () => void };
+  }>();
+  const addItem = jest.fn();
 
   const result = merge(
-    { cart: { items: [{ id: '1' }] } },   // persisted
-    { cart: { items: [], addItem } },       // current
-  )
+    { cart: { items: [{ id: '1' }] } }, // persisted
+    { cart: { items: [], addItem } }, // current
+  );
 
-  expect(result.cart.addItem).toBe(addItem)        // ✓ function survived
-  expect(result.cart.items).toEqual([{ id: '1' }]) // ✓ data restored
-})
+  expect(result.cart.addItem).toBe(addItem); // ✓ function survived
+  expect(result.cart.items).toEqual([{ id: '1' }]); // ✓ data restored
+});
 ```
 
 This is what you want from a state architecture: the ability to test the scary parts without spinning up a full browser and hoping localStorage cooperates.
@@ -365,11 +367,11 @@ If your application is genuinely simple, `useState` and a single small context w
 
 ### Summary
 
-| # | Rule |
-|---|------|
-| 01 | **Slice pattern** — use `createSliceHelpers` for scoped set/get and SSR-friendly init state |
-| 02 | **Middleware order** — `persist → immer → store`, always |
-| 03 | **Custom merge** — write `createSliceMerge` or your functions die on reload |
-| 04 | **Context provider** — never a module singleton; always scoped to a React tree |
-| 05 | **Async race conditions** — closure-based request counter costs nothing and saves everything |
-| 06 | **URL state** — belongs in `nuqs`, not Zustand |
+| #   | Rule                                                                                         |
+| --- | -------------------------------------------------------------------------------------------- |
+| 01  | **Slice pattern** — use `createSliceHelpers` for scoped set/get and SSR-friendly init state  |
+| 02  | **Middleware order** — `persist → immer → store`, always                                     |
+| 03  | **Custom merge** — write `createSliceMerge` or your functions die on reload                  |
+| 04  | **Context provider** — never a module singleton; always scoped to a React tree               |
+| 05  | **Async race conditions** — closure-based request counter costs nothing and saves everything |
+| 06  | **URL state** — belongs in `nuqs`, not Zustand                                               |
