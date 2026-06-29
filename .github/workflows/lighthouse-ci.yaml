@@ -7,14 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [22]
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -22,12 +22,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
 
-      - name: pnpm install
+      - name: pnpm install and build
         run: |
-          pnpm install
+          pnpm install --frozen-lockfile
           pnpm build
 
       - name: run Lighthouse CI
         run: |
           pnpm add -g @lhci/cli@0.9.x
-          lhci autorun || echo "LHCI failed!"
+          lhci autorun
