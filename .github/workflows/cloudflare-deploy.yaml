@@ -21,4 +21,4 @@ jobs:
       - name: Publish
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: pnpm dlx wrangler@latest pages deploy ./dist/client --branch=${{ github.ref_name }} --project-name=beutner-dev
+        run: pnpm wrangler deploy
