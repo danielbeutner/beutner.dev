@@ -1,0 +1,11 @@
+{
+  "name": "beutner-dev",
+  // Set this to today's date
+  "compatibility_date": "2026-06-30",
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "assets": {
+    "directory": "./dist/client/",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page"
+  }
+}
