@@ -229,12 +229,12 @@ A global singleton store and server-side rendering are natural enemies. A Contex
 
 The core problem: Zustand's `create()` produces a module-level singleton. In a server environment with many concurrent requests, that singleton is shared across all of them. Request A's user data bleeds into Request B. This is not a bug you want to discover from a customer's "I can see someone else's cart" support ticket.
 
-The solution is to never use a module-level store singleton at all. Instead, create the store inside a React Context provider, using `useRef` to prevent recreation on re-renders:
+The solution is to never use a module-level store singleton at all. Instead, create the store inside a React Context provider, using `useState` to prevent recreation on re-renders:
 
 ```tsx
 // root-store-provider.tsx
 export function RootStoreProvider({ children, initState }: Props) {
-  const [store] = useState<StoreApi>(() => createStore(initialState));
+  const [store] = useState<StoreApi>(() => createStore(initState));
 
   return (
     <RootStoreContext.Provider value={store}>
