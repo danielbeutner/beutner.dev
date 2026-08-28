@@ -234,7 +234,7 @@ The solution is to never use a module-level store singleton at all. Instead, cre
 ```tsx
 // root-store-provider.tsx
 export function RootStoreProvider({ children, initState }: Props) {
-  const [store] = useState<StoreApi>(() => createStore(initialState));
+  const [store] = useState<StoreApi>(() => createStore(initState));
 
   return (
     <RootStoreContext.Provider value={store}>
