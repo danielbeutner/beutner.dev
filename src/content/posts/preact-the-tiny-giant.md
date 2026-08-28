@@ -139,10 +139,11 @@ _Now go check your bundle size. I'll wait._
 
 ## Something's in the wood
 
-Preact's team is currently working on version 11 (beta 1 at the time of writing), which adds some necessary features and optimisations to keep up with infamous sibling. I am really curious to see how the new version will perform in real world applications, and if it will be able to maintain its philosophy.
+Preact's team is currently working on version 11, which adds some necessary features and optimisations to keep up with infamous sibling. I am really curious to see how the new version will perform in real world applications, and if it will be able to maintain its philosophy.
 
 Go ahead and give it a try, and let me know what you think!
 
-- [Preact 11 beta announcement](https://preactjs.com/blog/preact-11-beta/)
+UPDATE (2024-08-28): There is a release candidate for Preact 11 available. You can check it out on the [Preact release page on GitHub](https://github.com/preactjs/preact/releases).
+
 - [Preact docs](https://preactjs.com/guide/v10/getting-started)
 - [Preact Signals docs](https://preactjs.com/guide/v10/signals/)
