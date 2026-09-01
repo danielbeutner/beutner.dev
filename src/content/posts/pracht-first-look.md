@@ -8,6 +8,12 @@ Every few months a new "Next.js but ..." framework shows up, and every few month
 
 Let's get into it.
 
+## Where does the name come from?
+
+I think the name is close to Preact but "Pracht" is more likely to be a German word. And oh my gosh it is: "Pracht" means "splendor" or "magnificence" in Dutch / German. The framework's own docs say the name is meant to evoke "the splendor of Preact". A nice little touch and it follows the ultimate trend naming frameworks after dutch / german words like Zustand, Immer and Blitz.js.
+
+Yeah, I know, the content.. Let's get to it... again.
+
 ## What Pracht actually is
 
 Pracht's own tagline is "Preact-first. Vite-native. Explicit routing." Three words, three decisions, and each one is a deliberate departure from how Next.js does things.
